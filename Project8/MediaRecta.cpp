@@ -1,0 +1,75 @@
+#include "MediaRecta.h"
+
+MediaRecta::MediaRecta()
+{
+	VAO = 0;
+	VBO = 0;
+	texturaID = 0;
+
+	numVertices = 6;
+
+	ancho = 0.156f;
+	largo = 0.175f;
+
+	posX = 0.0f;
+	posZ = 0.0f;
+	
+	rotacionY = 0.0f;
+}
+
+void MediaRecta::inicializar(unsigned int idTextura)
+{
+	texturaID = idTextura;
+
+	float m = ancho / 2;
+
+	float vertices[]{
+		-m, 0.0f, 0.0f,		0.0f, 0.0f, // Abajo Izquierda
+		 m, 0.0f, 0.0f,		1.0f, 0.0f, // Abajo Derecha
+		-m, 0.0f, largo,	0.0f, 1.0f, // Arriba Izquierda
+
+		 m, 0.0f, 0.0f,		1.0f, 0.0f, // Abajo Derecha
+		 m, 0.0f, largo,	1.0f, 1.0f, // Arriba Derecha
+		-m, 0.0f, largo,	0.0f, 1.0f  // Arriba Izquierda
+	};
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
+void MediaRecta::dibujar(unsigned int shaderProgramID)
+{
+	glm::mat4 model = glm::mat4(1.0f);
+
+	model = glm::translate(model, glm::vec3(posX, 0.0f, posZ));
+
+	model = glm::rotate(model, glm::radians(rotacionY), glm::vec3(0.0f, 1.0f, 0.0f)); 
+
+	unsigned int modelLoc = glGetUniformLocation(shaderProgramID, "model");
+
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); // Buscar la varibale model en el shader, te envio 1 sola matriz, no la transpongas, Aqui empieza la matriz
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texturaID);
+
+	glBindVertexArray(VAO);
+
+	glDrawArrays(GL_TRIANGLES, 0, numVertices);
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
