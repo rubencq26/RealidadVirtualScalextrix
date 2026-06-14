@@ -50,22 +50,14 @@ END
 // SHADER
 //
 
-IDR_SHADER1               SHADER                    "shaders/VertexShader.glsl"
+IDR_SHADER1             SHADER                  "shaders/VertexShader.glsl"
 
-IDR_SHADER2               SHADER                    "shaders/FragmentShader.glsl"
+IDR_SHADER2             SHADER                  "shaders/FragmentShader.glsl"
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// IMAGE
-//
 
-IDR_IMAGE1               IMAGE                    "textures/FA18_RC_P01.png"
 
-IDR_IMAGE2               IMAGE                    "textures/Eject_Seat.png"
 
-IDR_IMAGE3               IMAGE                    "textures/Pilot_usa.png"
 
-IDR_IMAGE4               IMAGE                    "textures/Glass_Cockpit.png"
 
 #endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////

@@ -45,12 +45,6 @@
     <ClCompile Include="CGMaterial.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="F18_Hornet.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="F18_Hornet_pieces.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="RectaEstandar.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -70,6 +64,18 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Circuito.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CGSkybox.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CurvaCierre.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Car_pieces.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,12 +110,6 @@
     <ClInclude Include="CGMaterial.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="F18_Hornet.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="F18_Hornet_pieces.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="RectaEstandar.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -131,10 +131,60 @@
     <ClInclude Include="Circuito.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="CGSkybox.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="CurvaCierre.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Car_pieces.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project8.rc">
       <Filter>Archivos de recursos</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\VertexShader.glsl" />
+    <None Include="shaders\FragmentShader.glsl" />
+    <None Include="image6.bin">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="image7.bin">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="image8.bin">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="image9.bin">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="shader3.bin">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="shader4.bin">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="shaders\VertexCube.glsl" />
+    <None Include="shaders\FragmentCube.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\RectaStd.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
+    <Image Include="textures\CurvaStd.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
+    <Image Include="textures\CurvaExterior.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
+    <Image Include="textures\CurvaInterior.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -24,13 +24,13 @@ void CuartoRecta::inicializar(unsigned int idTextura)
 	float m = ancho / 2;
 
 	float vertices[]{
-		-m, 0.0f, 0.0f,		0.0f, 0.0f, // Abajo Izquierda
-		 m, 0.0f, 0.0f,		1.0f, 0.0f, // Abajo Derecha
-		-m, 0.0f, largo,	0.0f, 1.0f, // Arriba Izquierda
+		-m, 0.0f, 0.0f,		0.0f, 1.0f, 0.0f,	0.0f, 0.0f, // Abajo Izquierda
+		 m, 0.0f, 0.0f,		0.0f, 1.0f, 0.0f,	1.0f, 0.0f, // Abajo Derecha
+		-m, 0.0f, largo,	0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Arriba Izquierda
 
-		 m, 0.0f, 0.0f,		1.0f, 0.0f, // Abajo Derecha
-		 m, 0.0f, largo,	1.0f, 1.0f, // Arriba Derecha
-		-m, 0.0f, largo,	0.0f, 1.0f  // Arriba Izquierda
+		 m, 0.0f, 0.0f,		0.0f, 1.0f, 0.0f,	1.0f, 0.0f, // Abajo Derecha
+		 m, 0.0f, largo,	0.0f, 1.0f, 0.0f,	1.0f, 1.0f, // Arriba Derecha
+		-m, 0.0f, largo,	0.0f, 1.0f, 0.0f,	0.0f, 1.0f  // Arriba Izquierda
 	};
 
 	glGenVertexArrays(1, &VAO);
@@ -41,37 +41,42 @@ void CuartoRecta::inicializar(unsigned int idTextura)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
 
 
-void CuartoRecta::dibujar(unsigned int shaderProgramID)
+void CuartoRecta::dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-
 	model = glm::translate(model, glm::vec3(posX, 0.0f, posZ));
-
 	model = glm::rotate(model, glm::radians(rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	unsigned int modelLoc = glGetUniformLocation(shaderProgramID, "model");
+	glm::mat4 modelView = view * model;
+	glm::mat4 mvp = proj * modelView;
 
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); // Buscar la varibale model en el shader, te envio 1 sola matriz, no la transpongas, Aqui empieza la matriz
+	program->SetUniformMatrix4("MVP", mvp);
+	program->SetUniformMatrix4("ViewMatrix", view);
+	program->SetUniformMatrix4("ModelViewMatrix", modelView);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texturaID);
+	program->SetUniformI("BaseTex", 0);
 
 	glBindVertexArray(VAO);
-
 	glDrawArrays(GL_TRIANGLES, 0, numVertices);
 
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	
 }
 

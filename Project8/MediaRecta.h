@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "CGShaderProgram.h"
+
 class MediaRecta
 {
 private:
@@ -22,7 +24,7 @@ public:
 
 	void inicializar(unsigned int idTextura);
 
-	void dibujar(unsigned int shaderProgramID);
+	void dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view);
 
 	void setPosicion(float x, float z) { posX = x; posZ = z; }
 	void setRotation(float grados) { rotacionY = grados; }

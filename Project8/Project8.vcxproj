@@ -155,6 +155,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Car_pieces.cpp" />
     <ClCompile Include="CGApplication.cpp" />
     <ClCompile Include="CGCamera.cpp" />
     <ClCompile Include="CGLight.cpp" />
@@ -164,18 +166,20 @@
     <ClCompile Include="CGPiece.cpp" />
     <ClCompile Include="CGScene.cpp" />
     <ClCompile Include="CGShaderProgram.cpp" />
+    <ClCompile Include="CGSkybox.cpp" />
     <ClCompile Include="Circuito.cpp" />
     <ClCompile Include="CuartoRecta.cpp" />
+    <ClCompile Include="CurvaCierre.cpp" />
     <ClCompile Include="CurvaEstandar.cpp" />
     <ClCompile Include="CurvaExterior.cpp" />
     <ClCompile Include="CurvaInterior.cpp" />
-    <ClCompile Include="F18_Hornet.cpp" />
-    <ClCompile Include="F18_Hornet_pieces.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MediaRecta.cpp" />
     <ClCompile Include="RectaEstandar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="Car_pieces.h" />
     <ClInclude Include="CGApplication.h" />
     <ClInclude Include="CGCamera.h" />
     <ClInclude Include="CGLight.h" />
@@ -185,19 +189,37 @@
     <ClInclude Include="CGPiece.h" />
     <ClInclude Include="CGScene.h" />
     <ClInclude Include="CGShaderProgram.h" />
+    <ClInclude Include="CGSkybox.h" />
     <ClInclude Include="Circuito.h" />
     <ClInclude Include="CuartoRecta.h" />
+    <ClInclude Include="CurvaCierre.h" />
     <ClInclude Include="CurvaEstandar.h" />
     <ClInclude Include="CurvaExterior.h" />
     <ClInclude Include="CurvaInterior.h" />
-    <ClInclude Include="F18_Hornet.h" />
-    <ClInclude Include="F18_Hornet_pieces.h" />
     <ClInclude Include="MediaRecta.h" />
     <ClInclude Include="RectaEstandar.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project8.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image6.bin" />
+    <None Include="image7.bin" />
+    <None Include="image8.bin" />
+    <None Include="image9.bin" />
+    <None Include="shader3.bin" />
+    <None Include="shader4.bin" />
+    <None Include="shaders\FragmentCube.glsl" />
+    <None Include="shaders\FragmentShader.glsl" />
+    <None Include="shaders\VertexCube.glsl" />
+    <None Include="shaders\VertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\CurvaExterior.png" />
+    <Image Include="textures\CurvaInterior.png" />
+    <Image Include="textures\CurvaStd.png" />
+    <Image Include="textures\RectaStd.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

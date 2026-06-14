@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "resource.h"
 #include <FreeImage.h>
+#include <iostream>
 
 //
 // FUNCIÓN: CGMaterial::CGMaterial()
@@ -128,6 +129,10 @@ void CGMaterial::InitTexture(const char* filename)
 void CGMaterial::InitTexture(int idr)
 {
 	HRSRC handle = FindResource(NULL, MAKEINTRESOURCE(idr), L"IMAGE");
+	if (handle == NULL) {
+		std::cout << "\n[ERROR] No encuentro la imagen con ID: " << idr << ". Revisa resource.h y el .rc" << std::endl;
+		return; // Cortamos aqui para que no explote el memcpy
+	}
 	HGLOBAL hGlobal = LoadResource(NULL, handle);
 	LPCTSTR rsc_ptr = static_cast<LPCTSTR>(LockResource(hGlobal));
 	DWORD mem_size = SizeofResource(NULL, handle);

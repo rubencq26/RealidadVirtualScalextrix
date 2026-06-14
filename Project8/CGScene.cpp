@@ -5,7 +5,7 @@
 #include "CGShaderProgram.h"
 #include "CGObject.h"
 #include "CGLight.h"
-#include "F18_Hornet.h"
+#include "resource.h"
 
 
 //
@@ -19,11 +19,32 @@ CGScene::CGScene()
     Ldir = glm::normalize(Ldir);
     light = new CGLight();
     light->SetLightDirection(Ldir);
-    light->SetAmbientLight(glm::vec3(0.3f, 0.3f, 0.3f));
+    light->SetAmbientLight(glm::vec3(0.5f, 0.5f, 0.5f));
     light->SetDifusseLight(glm::vec3(0.7f, 0.7f, 0.7f));
     light->SetSpecularLight(glm::vec3(1.0f, 1.0f, 1.0f));
 
-    object = new F18_Hornet(); // Introducir aquí el constructor del objeto
+    matRecta = new CGMaterial();
+    matRecta->InitTexture("RectaStd.png");
+
+    matCurvaInt = new CGMaterial();
+    matCurvaInt->InitTexture("RectaStd.png");
+
+    matCurvaEst = new CGMaterial();
+    matCurvaEst->InitTexture("RectaStd.png");
+
+    matCurvaExt = new CGMaterial();
+    matCurvaExt->InitTexture("RectaStd.png");
+
+    miCircuito = new Circuito(matRecta->GetTexture(), matCurvaEst->GetTexture(), matCurvaInt->GetTexture() ,matCurvaExt->GetTexture());
+    miCircuito->construirCircuito();
+
+    f1 = new Car();
+    f1->Rotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+    f1->Translate(glm::vec3(0.0f, 0.0f, 0.0f));
+
+    f2 = new Car();
+    f2->Rotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+    f2->Translate(glm::vec3(0.0f, 0.0f, 0.0f));
 
 }
 
@@ -35,7 +56,11 @@ CGScene::CGScene()
 CGScene::~CGScene()
 {
     delete light;
-    delete object;
+    delete miCircuito;
+    delete matRecta;
+    delete matCurvaInt;
+    delete matCurvaEst;
+    delete matCurvaExt;
 }
 
 //
@@ -46,5 +71,15 @@ CGScene::~CGScene()
 void CGScene::Draw(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view)
 {
     light->SetUniforms(program);
-    object->Draw(program, proj, view);
+    
+    matRecta->SetUniforms(program);
+    matCurvaEst->SetUniforms(program);
+    matCurvaExt->SetUniforms(program);
+    matCurvaInt->SetUniforms(program);
+
+    miCircuito->dibujar(program, proj, view);
+
+    f1->Draw(program, proj, view);
+    f2->Draw(program, proj, view);
+
 }

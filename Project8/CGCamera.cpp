@@ -57,9 +57,9 @@ void CGCamera::SetPosition(GLfloat x, GLfloat y, GLfloat z)
 //
 void CGCamera::SetDirection(GLfloat xD, GLfloat yD, GLfloat zD, GLfloat xU, GLfloat yU, GLfloat zU)
 {
-    Dir = glm::vec3(xD, yD, zD);
-    Up = glm::vec3(xU, yU, zU);
-    Right = glm::cross(Up, Dir);
+    Dir = glm::normalize(glm::vec3(xD, yD, zD));
+    Up = glm::normalize(glm::vec3(xU, yU, zU));
+    Right = glm::normalize(glm::cross(Up, Dir));
 }
 
 //
@@ -210,8 +210,8 @@ void CGCamera::TurnRight()
     Dir.y = cosAngle * Dir.y - sinAngle * Right.y;
     Dir.z = cosAngle * Dir.z - sinAngle * Right.z;
 
-    // Right = Up x Dir
-    Right = glm::cross(Up, Dir);
+    Dir = glm::normalize(Dir); // ¡Mantiene la estabilidad del giro!
+    Right = glm::normalize(glm::cross(Up, Dir));
 }
 
 //
@@ -225,8 +225,8 @@ void CGCamera::TurnLeft()
     Dir.y = cosAngle * Dir.y + sinAngle * Right.y;
     Dir.z = cosAngle * Dir.z + sinAngle * Right.z;
 
-    // Right = Up x Dir
-    Right = glm::cross(Up, Dir);
+    Dir = glm::normalize(Dir); // ¡Mantiene la estabilidad del giro!
+    Right = glm::normalize(glm::cross(Up, Dir));
 }
 
 //
