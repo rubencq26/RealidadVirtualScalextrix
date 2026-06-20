@@ -476,39 +476,39 @@ void Circuito::construirCircuito()
 	
 }
 
-void Circuito::dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view)
+void Circuito::dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view, glm::mat4 shadowViewMatrix)
 {
 	for (size_t i = 0; i < rectaEstandar.size(); i++) {
-		rectaEstandar[i]->dibujar(program, proj, view);
+		rectaEstandar[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 
 	
 	for (size_t i = 0; i < mediaRecta.size(); i++) {
-		mediaRecta[i]->dibujar(program, proj, view);
+		mediaRecta[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 
 	
 	for (size_t i = 0; i < cuartoRecta.size(); i++) {
-		cuartoRecta[i]->dibujar(program, proj, view);
+		cuartoRecta[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 
 	
 	for (size_t i = 0; i < curvaInterior.size(); i++) {
-		curvaInterior[i]->dibujar(program, proj, view);
+		curvaInterior[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 
 
 	for (size_t i = 0; i < curvaEstandar.size(); i++) {
-		curvaEstandar[i]->dibujar(program, proj, view);
+		curvaEstandar[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 
 
 	for (size_t i = 0; i < curvaExterior.size(); i++) {
-		curvaExterior[i]->dibujar(program, proj, view);
+		curvaExterior[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 
 	for (size_t i = 0; i < curvaCierre.size(); i++) {
-		curvaCierre[i]->dibujar(program, proj, view);
+		curvaCierre[i]->dibujar(program, proj, view, shadowViewMatrix);
 	}
 }
 

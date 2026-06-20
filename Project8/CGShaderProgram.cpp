@@ -280,3 +280,10 @@ GLvoid CGShaderProgram::SetUniformI(const char* name, GLint i)
 	GLuint location = glGetUniformLocation(program, name);
 	if (location >= 0) glUniform1i(location, i);
 }
+
+
+GLvoid CGShaderProgram::SetUniformSubroutine(int mode, const char* name)
+{
+	GLuint location = glGetSubroutineIndex(program, mode, name);
+	if (location >= 0) glUniformSubroutinesuiv(mode, 1, &location);
+}

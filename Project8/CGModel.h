@@ -17,6 +17,8 @@ public:
 	void mouse_button(int button, int action);
 	void mouse_move(double xpos, double ypos);
 	void resize(int w, int h);
+	bool InitShadowMap();
+
 
 private:
 	CGShaderProgram* program;
@@ -34,6 +36,13 @@ private:
 
 	CGSkybox* skybox;
 	glm::mat4 projection;
+
+
+	GLsizei wndWidth;
+	GLsizei wndHeight;
+	GLuint shadowFBO;
+	GLuint depthTexId;
+
 
 	
 };

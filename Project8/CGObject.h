@@ -21,7 +21,7 @@ public:
 	void Rotate(GLfloat angle, glm::vec3 axis);
 	void SetLocation(glm::mat4 loc);
 	glm::mat4 GetLocation();
-	void Draw(CGShaderProgram* program, glm::mat4 projection, glm::mat4 view);
+	void Draw(CGShaderProgram* program, glm::mat4 projection, glm::mat4 view, glm::mat4 shadowViewMatrix);
 
 	virtual int GetNumPieces() = 0;
 	virtual CGPiece* GetPiece(int i) = 0;

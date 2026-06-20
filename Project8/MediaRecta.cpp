@@ -54,7 +54,7 @@ void MediaRecta::inicializar(unsigned int idTextura)
 	glBindVertexArray(0);
 }
 
-void MediaRecta::dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view)
+void MediaRecta::dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view, glm::mat4 shadowViewMatrix)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(posX, 0.0f, posZ));
@@ -66,6 +66,7 @@ void MediaRecta::dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 vie
 	program->SetUniformMatrix4("MVP", mvp);
 	program->SetUniformMatrix4("ViewMatrix", view);
 	program->SetUniformMatrix4("ModelViewMatrix", modelView);
+	program->SetUniformMatrix4("ShadowMatrix", shadowViewMatrix * model);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texturaID);

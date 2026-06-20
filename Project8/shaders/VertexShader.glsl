@@ -7,10 +7,12 @@
  uniform mat4 MVP;
  uniform mat4 ViewMatrix;
  uniform mat4 ModelViewMatrix;
+ uniform mat4 ShadowMatrix;
 
  out vec3 Position;
  out vec3 Normal;
  out vec2 TexCoord;
+ out vec4 ShadowCoord;
 
  void main()
  {
@@ -19,5 +21,6 @@
    Normal = vec3(n4);
    Position = vec3(v4);
    TexCoord = VertexTexCoord;
+   ShadowCoord = ShadowMatrix * vec4(VertexPosition, 1.0);
    gl_Position = MVP * vec4(VertexPosition, 1.0);
  }

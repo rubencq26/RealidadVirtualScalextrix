@@ -14,6 +14,12 @@ CGLight::CGLight()
 	Ls = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
+
+glm::vec3 CGLight::GetLightDirection()
+{
+	return Ldir;
+}
+
 //
 // FUNCIÓN: CGLight::SetLightDirection(glm::vec3 d)
 //

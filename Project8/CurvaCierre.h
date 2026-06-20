@@ -28,7 +28,7 @@ public:
 	// ¡NUEVO! Le pasamos dónde está el cursor para que calcule la elipse
 	void inicializar(unsigned int idTextura, float curX, float curZ, float curAngulo, bool esDerecha);
 
-	void dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view);
+	void dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view, glm::mat4 shadowViewMatrix);
 	void setPosicion(float x, float z) { posX = x; posZ = z; }
 	void setRotation(float grados) { rotacionY = grados; }
 };

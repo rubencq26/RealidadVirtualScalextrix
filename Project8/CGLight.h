@@ -18,6 +18,7 @@ private:
 
 public:
 	CGLight();
+	glm::vec3 GetLightDirection();
 	void SetLightDirection(glm::vec3 d);
 	void SetAmbientLight(glm::vec3 a);
 	void SetDifusseLight(glm::vec3 d);

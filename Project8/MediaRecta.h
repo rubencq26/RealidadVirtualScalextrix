@@ -24,7 +24,7 @@ public:
 
 	void inicializar(unsigned int idTextura);
 
-	void dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view);
+	void dibujar(CGShaderProgram* program, glm::mat4 proj, glm::mat4 view, glm::mat4 shadowViewMatrix);
 
 	void setPosicion(float x, float z) { posX = x; posZ = z; }
 	void setRotation(float grados) { rotacionY = grados; }

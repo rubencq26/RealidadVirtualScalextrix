@@ -36,4 +36,5 @@ public:
 	GLvoid SetUniformVec3(const char* name, glm::vec3 m);
 	GLvoid SetUniformMatrix4(const char* name, glm::mat4 m);
 	GLvoid SetUniformI(const char* name, GLint i);
+	GLvoid SetUniformSubroutine(int mode, const char* name);
 };

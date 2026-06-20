@@ -45,7 +45,7 @@ public:
 	Circuito(unsigned int r, unsigned int s, unsigned int i, unsigned int e);
 	
 	void construirCircuito();
-	void dibujar(CGShaderProgram* shaderProgram, glm::mat4 proj, glm::mat4 view);
+	void dibujar(CGShaderProgram* shaderProgram, glm::mat4 proj, glm::mat4 view, glm::mat4 shadowViewMatrix);
 	struct Waypoint {
 		float x;
 		float z;

@@ -32,6 +32,9 @@ void CGModel::initialize(int w, int h)
 	scene = new CGScene();
 	skybox = new CGSkybox();
 
+	bool frameBufferStatus = InitShadowMap();
+	if (!frameBufferStatus) return;
+
 	// Asigna el viewport y el clipping volume
 	resize(w, h);
 
@@ -61,6 +64,9 @@ void CGModel::finalize()
 //
 void CGModel::resize(int w, int h)
 {
+	wndWidth = w;
+	wndHeight = h;
+
 	double fov = glm::radians(15.0);
 	double sin_fov = sin(fov);
 	double cos_fov = cos(fov);
@@ -78,15 +84,89 @@ void CGModel::resize(int w, int h)
 //
 void CGModel::render()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	program->Use();
+
+	glm::mat4 lightViewMatrix = scene->GetLightViewMatrix();
+	glm::mat4 lightPerspective = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 400.0f);
+
+	glm::mat4 lightMVP = lightPerspective * lightViewMatrix;
+
+	// --- PASADA 1: MAPA DE SOMBRAS ---
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
+
+	// ¡CORRECCIÓN!: Limpiamos SOLO la profundidad. Limpiar el color aquí rompe la GPU.
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	program->SetUniformSubroutine(GL_FRAGMENT_SHADER, "recordDepth");
+
+	glViewport(0, 0, 1024, 1024);
+	scene->Draw(program, lightPerspective, lightViewMatrix, lightMVP);
+
+
+	// --- PASADA 2: SKYBOX ---
+	glBindFramebuffer(GL_FRAMEBUFFER, 0); // Volvemos a la pantalla
+
+	// Aquí sí limpiamos el color y la profundidad de la pantalla real
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// ¡Ahora wndWidth y wndHeight ya no son cero gracias al arreglo en resize()!
+	glViewport(0, 0, wndWidth, wndHeight);
+
 	glm::mat4 view = camera->ViewMatrix();
+
 	skyboxProgram->Use();
 	skybox->Draw(skyboxProgram, projection, view);
+
+
+	// --- PASADA 3: DIBUJAR ESCENA ILUMINADA ---
 	program->Use();
-	scene->Draw(program, projection, view);
+
+	program->SetUniformSubroutine(GL_FRAGMENT_SHADER, "shadeWithShadow");
+	program->SetUniformI("ShadowMap", 1);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, depthTexId);
+
+	glm::mat4 viewMatrix = camera->ViewMatrix();
+	scene->Draw(program, projection, viewMatrix, lightMVP);
 }
+
+
+bool CGModel::InitShadowMap()
+{
+	GLfloat border[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLsizei shadowMapWidth = 2048;
+	GLsizei shadowMapHeight = 2048;
+
+	glGenFramebuffers(1, &shadowFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
+
+	glGenTextures(1, &depthTexId);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, depthTexId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, shadowMapWidth,
+		shadowMapHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexId, 0);
+
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	bool result = true;
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		result = false;
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return result;
+}
+
 
 //
 // FUNCIÓN: CGModel::update()

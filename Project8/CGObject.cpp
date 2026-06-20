@@ -59,11 +59,11 @@ void CGObject::Rotate(GLfloat angle, glm::vec3 axis)
 //
 // PROPÓSITO: Dibuja el objeto
 //
-void CGObject::Draw(CGShaderProgram* program, glm::mat4 projection, glm::mat4 view)
+void CGObject::Draw(CGShaderProgram* program, glm::mat4 projection, glm::mat4 view, glm::mat4 shadowViewMatrix)
 {
 	int num = GetNumPieces();
 	for (int i = 0; i < num; i++)
 	{
-		GetPiece(i)->Draw(program, projection, view, model);
+		GetPiece(i)->Draw(program, projection, view, model, shadowViewMatrix);
 	}
 }
